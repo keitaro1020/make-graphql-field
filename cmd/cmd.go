@@ -118,7 +118,8 @@ func (c *cmdClient) GetColumnInfo(table string) ([]ColumnInfo, error) {
 
 func (c *cmdClient) GetGraphQLType(table string, cis []ColumnInfo) string {
 
-	name := fmt.Sprintf("%s%s", strings.ToUpper(table[0:1]), table[1:len([]rune(table))-1])
+	camelTable := snakeToCamel(table)
+	name := fmt.Sprintf("%s%s", strings.ToUpper(camelTable[0:1]), camelTable[1:len([]rune(camelTable))-1])
 	str := fmt.Sprintf("var %sType = graphql.NewObject(graphql.ObjectConfig{\n", name)
 	str = str + fmt.Sprintf("	Name: \"%s\",\n", name)
 	str = str + fmt.Sprintf("	Fields: graphql.Fields{\n")
